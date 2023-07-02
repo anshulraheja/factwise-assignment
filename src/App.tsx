@@ -12,7 +12,7 @@ interface Person {
 
 const data: Person[] = [
   {
-    name: "John Doe",
+    name: "Doe",
     DOB: "1990-01-01",
     gender: "male",
     country: "India",
