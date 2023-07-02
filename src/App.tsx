@@ -3,6 +3,7 @@ import { FiPlus, FiMinus, FiEdit2, FiTrash } from "react-icons/fi";
 import "./styles.css";
 
 interface Person {
+  id: number;
   name: string;
   DOB: string;
   gender: string;
@@ -12,61 +13,64 @@ interface Person {
 
 const data: Person[] = [
   {
-    name: "Doe",
+    id: 1,
+    name: "John Doee",
     DOB: "1990-01-01",
     gender: "male",
     country: "India",
     description:
-      "Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsum Lorem ipsumLorem ipsum"
+      "Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsum Lorem ipsumLorem ipsum",
   },
   {
-    name: "aman Doe",
+    id: 2,
+    name: "Aman Doe",
     DOB: "1991-01-01",
     gender: "male",
     country: "India",
-    description: "Lorem ipsum"
+    description: "Lorem ipsum",
   },
   {
-    name: "John Doe",
+    id: 3,
+    name: "Jane Doe",
     DOB: "1992-01-01",
     gender: "female",
-    country: "usa",
-    description: "Lorem ipsum"
-  }
-
+    country: "USA",
+    description: "Lorem ipsum",
+  },
   // Add more people to the data array
 ];
 
-const Accordion: React.FC<Person> = ({
+const calculateAge = (dob: string): number => {
+  const birthDate = new Date(dob);
+  const currentDate = new Date();
+  const age = currentDate.getFullYear() - birthDate.getFullYear();
+  if (
+    currentDate.getMonth() < birthDate.getMonth() ||
+    (currentDate.getMonth() === birthDate.getMonth() &&
+      currentDate.getDate() < birthDate.getDate())
+  ) {
+    return age - 1;
+  }
+  return age;
+};
+
+const Accordion: React.FC<any> = ({
+  id,
   name,
   DOB,
   gender,
   country,
-  description
+  description,
+  handleDeletePerson,
 }) => {
-  const [list, setList] = useState(data);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedName, setEditedName] = useState(name);
   const [editedDOB, setEditedDOB] = useState(DOB);
+  const [editedAge, setEditedAge] = useState<any>(calculateAge(DOB));
   const [editedGender, setEditedGender] = useState(gender);
   const [editedCountry, setEditedCountry] = useState(country);
   const [editedDescription, setEditedDescription] = useState(description);
-
-  const calculateAge = (dob: string): number => {
-    const birthDate = new Date(dob);
-    const currentDate = new Date();
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
-    // Check if the birth date has already occurred this year
-    if (
-      currentDate.getMonth() < birthDate.getMonth() ||
-      (currentDate.getMonth() === birthDate.getMonth() &&
-        currentDate.getDate() < birthDate.getDate())
-    ) {
-      return age - 1;
-    }
-    return age;
-  };
 
   const handleAccordionClick = () => {
     setIsOpen(!isOpen);
@@ -76,41 +80,29 @@ const Accordion: React.FC<Person> = ({
   const handleEditClick = () => {
     setIsEditMode(true);
   };
-
   const handleSaveClick = () => {
     if (
       editedName.trim() === "" ||
       editedCountry.trim() === "" ||
-      isNaN(Number(editedCountry)) === false ||
-      isNaN(Number(calculateAge(editedDOB))) === true
+      isNaN(parseInt(editedAge))
     ) {
       alert("Please fill in all the fields correctly.");
       return;
     }
-
-    // Save the changes and exit edit mode
     setEditedName(editedName.trim());
     setEditedCountry(editedCountry.trim());
+    setEditedAge(editedAge);
     setEditedDescription(editedDescription.trim());
     setIsEditMode(false);
   };
 
   const handleCancelClick = () => {
-    // Revert the changes and exit edit mode
     setEditedName(name);
     setEditedDOB(DOB);
     setEditedGender(gender);
     setEditedCountry(country);
     setEditedDescription(description);
     setIsEditMode(false);
-  };
-
-  const handleDeleteClick = () => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      // Delete the user
-      // Implement your own logic to remove the person from the data array
-      console.log("User deleted");
-    }
   };
 
   return (
@@ -134,10 +126,13 @@ const Accordion: React.FC<Person> = ({
                   <label>Age</label>
                   <input
                     className={isEditMode ? "editable" : "input-details"}
-                    type="text"
-                    value={calculateAge(editedDOB)}
+                    type="text" 
+                    value={editedAge}
+                    onChange={(e) => setEditedAge(e.target.value)}
+                    readOnly={!isEditMode}
                   />
                 </span>
+
                 <span>
                   <label>Gender</label>
                   <select
@@ -189,9 +184,14 @@ const Accordion: React.FC<Person> = ({
                   <FiEdit2 />
                 </button>
               )}
-              <button className="delete-btn" onClick={handleDeleteClick}>
-                <FiTrash />
-              </button>
+              {!isEditMode && (
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDeletePerson(id)}
+                >
+                  <FiTrash />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -202,10 +202,19 @@ const Accordion: React.FC<Person> = ({
 
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [list, setList] = useState(data);
 
-  const filteredData = data.filter((person) =>
+  console.log(list);
+  const filteredData = list.filter((person) =>
     person.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleDeletePerson = (id: number) => {
+    console.log(id);
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      setList((prevList) => prevList.filter((person) => person.id !== id));
+    }
+  };
 
   return (
     <div className="app">
@@ -218,8 +227,12 @@ const App: React.FC = () => {
         />
       </div>
       <div className="accordion-list">
-        {filteredData.map((person, index) => (
-          <Accordion key={index} {...person} />
+        {filteredData.map((person) => (
+          <Accordion
+            key={person.id} // Use the id as the key prop
+            {...person}
+            handleDeletePerson={handleDeletePerson}
+          />
         ))}
       </div>
     </div>
@@ -227,5 +240,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-//close accordina  when somethenig else is open

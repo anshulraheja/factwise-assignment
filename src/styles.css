@@ -60,6 +60,7 @@ body {
 }
 .card-actions .save-btn,
 .card-actions .cancel-btn {
+  margin-top: 10px;
   background-color: #4caf50;
   color: white;
 }
