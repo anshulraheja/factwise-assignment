@@ -126,7 +126,7 @@ const Accordion: React.FC<any> = ({
                   <label>Age</label>
                   <input
                     className={isEditMode ? "editable" : "input-details"}
-                    type="text" 
+                    type="text"
                     value={editedAge}
                     onChange={(e) => setEditedAge(e.target.value)}
                     readOnly={!isEditMode}
@@ -187,7 +187,16 @@ const Accordion: React.FC<any> = ({
               {!isEditMode && (
                 <button
                   className="delete-btn"
-                  onClick={() => handleDeletePerson(id)}
+                  onClick={() =>
+                    handleDeletePerson({
+                      id,
+                      name,
+                      DOB,
+                      gender,
+                      country,
+                      description,
+                    })
+                  }
                 >
                   <FiTrash />
                 </button>
@@ -203,17 +212,20 @@ const Accordion: React.FC<any> = ({
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [list, setList] = useState(data);
+  const [personToDelete, setPersonToDelete] = useState<Person | null>(null);
 
   console.log(list);
   const filteredData = list.filter((person) =>
     person.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleDeletePerson = (id: number) => {
-    console.log(id);
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      setList((prevList) => prevList.filter((person) => person.id !== id));
-    }
+  const handleDeletePerson = (person: Person) => {
+    setPersonToDelete(person);
+  };
+
+  const handleConfirmDelete = (person: Person) => {
+    setList((prevList) => prevList.filter((p) => p.id !== person.id));
+    setPersonToDelete(null);
   };
 
   return (
@@ -235,6 +247,28 @@ const App: React.FC = () => {
           />
         ))}
       </div>
+      {personToDelete && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Confirm Delete</h3>
+            <p>Are you sure you want to delete {personToDelete.name}?</p>
+            <div className="modal-actions">
+              <button
+                className="cancel-btn"
+                onClick={() => setPersonToDelete(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="delete-btn"
+                onClick={() => handleConfirmDelete(personToDelete)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
