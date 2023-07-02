@@ -1,34 +1,36 @@
-/* App Styles */
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
   font-family: "Poppins", sans-serif;
 }
+
 .app {
-  max-width: 500px;
-  margin: 20px auto;
+  max-width: 50rem;
+  margin: 2rem auto;
 }
 
 .search-bar {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
+
 .search-bar input {
-  width: calc(100% - 16px);
-  padding: 8px;
-  border: 1px solid black;
-  border-radius: 4px;
-  font-size: 14px;
+  width: calc(100% - 1rem);
+  padding: 0.5rem;
+  border: 0.1rem solid black;
+  border-radius: 0.4rem;
+  font-size: 0.875rem;
 }
+
 .accordion-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
 }
 
 /* Accordion Styles */
 .accordion {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.4rem;
   overflow: hidden;
 }
 
@@ -36,9 +38,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   cursor: pointer;
 }
+
 .user-name {
   background: none;
   font-size: 1.25rem;
@@ -46,21 +49,23 @@ body {
   border: none;
   outline: none;
 }
+
 .accordion-header:hover {
   background-color: #e0e0e0;
 }
 
 .accordion-content {
-  padding: 0 20px 20px 20px;
+  padding: 0 2rem 2rem 2rem;
 }
 
 .card {
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
 }
+
 .card-actions .save-btn,
 .card-actions .cancel-btn {
-  margin-top: 10px;
+  margin-top: 1rem;
   background-color: #4caf50;
   color: white;
 }
@@ -68,17 +73,20 @@ body {
 .card-user-details {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
+
 .card-user-details > * {
   flex: 1;
 }
+
 label {
   color: rgba(0, 0, 0, 0.5);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
+
 .input-details {
-  font-size: 16px;
+  font-size: 1rem;
   border: none;
   outline: none;
   background: transparent;
@@ -89,12 +97,13 @@ label {
 
 .description label {
   color: rgba(0, 0, 0, 0.5);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
+
 .default-text-area {
   display: flex;
   flex-direction: column;
-  min-height: 100px;
+  min-height: 6.25rem;
   border: none;
   outline: none;
   background: transparent;
@@ -108,8 +117,8 @@ label {
 }
 
 .card-actions button {
-  margin-left: 5px;
-  padding: 5px;
+  margin-left: 0.3125rem;
+  padding: 0.3125rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -127,27 +136,28 @@ label {
 /* Icons */
 .edit-btn,
 .delete-btn {
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .editable {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  padding: 5px;
+  border: 0.1rem solid rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.3125rem;
   display: block;
   width: 50%;
 }
+
 .editable-text-area {
   display: flex;
   flex-direction: column;
-  min-height: 100px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  min-height: 6.25rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
   background: transparent;
   width: 100%;
 }
 
-/* modal */
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -162,8 +172,8 @@ label {
 
 .modal-content {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 4px;
+  padding: 2rem;
+  border-radius: 0.4rem;
 }
 
 .modal h3 {
@@ -173,9 +183,9 @@ label {
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .modal button {
-  margin-left: 10px;
+  margin-left: 1rem;
 }
