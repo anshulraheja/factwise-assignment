@@ -32,6 +32,7 @@ body {
   border: 0.1rem solid #ccc;
   border-radius: 0.4rem;
   overflow: hidden;
+  margin-bottom: 1.5rem;
 }
 
 .accordion-header {
@@ -39,6 +40,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
+}
+.accordian-toggle-btn {
   cursor: pointer;
 }
 
@@ -49,10 +52,10 @@ body {
   border: none;
   outline: none;
 }
-
+/* 
 .accordion-header:hover {
   background-color: #e0e0e0;
-}
+} */
 
 .accordion-content {
   padding: 0 2rem 2rem 2rem;
@@ -188,4 +191,18 @@ label {
 
 .modal button {
   margin-left: 1rem;
+}
+.modal-cancel-btn {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+.modal-delete-btn {
+  background: rgb(204, 82, 82);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
 }

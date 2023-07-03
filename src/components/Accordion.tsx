@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiPlus, FiMinus, FiEdit2, FiTrash } from "react-icons/fi";
 import { Person, calculateAge } from "../utils/helpers";
 
-interface AccordionProps {
+type AccordionProps = {
   person: Person;
+  toggleAccordion: (accordionId: number) => void;
   handleDeletePerson: (person: Person) => void;
-}
+  isExpanded: boolean;
+};
 
 const Accordion: React.FC<AccordionProps> = ({
   person,
   handleDeletePerson,
+  isExpanded,
+  toggleAccordion,
 }) => {
   const { id, name, DOB, gender, country, description } = person;
 
@@ -22,9 +26,13 @@ const Accordion: React.FC<AccordionProps> = ({
   const [editedCountry, setEditedCountry] = useState(country);
   const [editedDescription, setEditedDescription] = useState(description);
 
+  useEffect(() => {
+    setIsOpen(isExpanded);
+  }, [isExpanded]);
+
   const handleAccordionClick = () => {
     setIsOpen(!isOpen);
-    setIsEditMode(false);
+    toggleAccordion(person.id);
   };
 
   const handleEditClick = () => {
@@ -58,7 +66,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
   return (
     <div className={`accordion ${isOpen ? "open" : ""}`}>
-      <div className="accordion-header" onClick={handleAccordionClick}>
+      <div className="accordion-header">
         <input
           className={`user-name ${isEditMode ? "editable" : ""}`}
           type="text"
@@ -66,7 +74,9 @@ const Accordion: React.FC<AccordionProps> = ({
           onChange={(e) => setEditedName(e.target.value)}
           disabled={!isEditMode}
         />
-        {isOpen ? <FiMinus /> : <FiPlus />}
+        <div onClick={handleAccordionClick} className="accordian-toggle-btn">
+          {isOpen ? <FiMinus /> : <FiPlus />}
+        </div>
       </div>
       {isOpen && (
         <div className="accordion-content">

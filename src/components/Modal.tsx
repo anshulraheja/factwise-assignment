@@ -22,11 +22,11 @@ const Modal: React.FC<ModalProps> = ({
         <h3>Confirm Delete</h3>
         <p>Are you sure you want to delete {name}?</p>
         <div className="modal-actions">
-          <button className="cancel-btn" onClick={closeModal}>
+          <button className="modal-cancel-btn" onClick={closeModal}>
             Cancel
           </button>
           <button
-            className="delete-btn"
+            className="modal-delete-btn"
             onClick={() => handleConfirmDelete(personToDelete)}
           >
             Delete
